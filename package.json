@@ -1,12 +1,14 @@
 {
-  "name": "sugoyose-tmp",
+  "name": "sugoyose",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "jspdf": "^4.2.1",
@@ -30,7 +32,6 @@
     "jsdom": "^30.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.0.0"
   }
 }

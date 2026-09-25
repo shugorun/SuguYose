@@ -27,26 +27,40 @@ type PlacedImage = {
 ## Zustandストア
 
 ```ts
+type Step = 'template' | 'instruction' | 'upload' | 'processing' | 'placement' | 'export'
+
+const STEPS: Step[] = ['template', 'instruction', 'upload', 'processing', 'placement', 'export']
+
 type EditorState = {
+  step: Step
   template: Template
   placedImage: PlacedImage | null
   status: 'idle' | 'processing' | 'ready' | 'exporting'
+  goNext: () => void
+  goBack: () => void
   setTemplate: (t: Template) => void
   setPlacedImage: (img: PlacedImage) => void
   updateTransform: (patch: Partial<Pick<PlacedImage, 'x' | 'y' | 'scaleX' | 'scaleY' | 'rotation'>>) => void
 }
 ```
 
+- `STEPS`の並び順がそのままウィザードの進行順。`goNext`/`goBack`は現在の`step`を配列内で前後させるだけ
+- 進捗バーは`STEPS.indexOf(step)`で位置を出せる
+
 ## コンポーネント・ファイル構成
 
 ```
 app/
-  page.tsx              画面全体、ステップの出し分け
+  page.tsx              Wizardをレンダリングするだけ
 components/
-  TemplateSelector.tsx  テンプレート選択（2種類＋カスタムサイズ入力）
-  ImageUploader.tsx     画像アップロード
-  CanvasEditor.tsx      react-konvaのStage/Layer、Transformer
-  ExportButton.tsx      PDF書き出しボタン
+  Wizard.tsx            進捗バー・戻るボタン・現在stepの出し分け（外枠）
+  steps/
+    TemplateStep.tsx     1. テンプレート選択（2種類＋カスタムサイズ入力）
+    InstructionStep.tsx  2. 書き方インストラクション（例・文字数目安）
+    UploadStep.tsx       3. 画像アップロード/撮影
+    ProcessingStep.tsx   4. 画像透過処理（進捗表示）
+    PlacementStep.tsx    5. react-konvaでの配置
+    ExportStep.tsx       6. PDF出力
 lib/
   imageProcessing.ts    ノイズ除去・影除去・高画質化（ADR-0001の純粋関数群）
   pdfExport.ts          pixelRatio計算・jsPDF埋め込み（ADR-0002）
@@ -57,4 +71,5 @@ types/
 ```
 
 - `lib/`配下は純粋関数中心にして、単体テストの対象にする
-- 画面遷移は`page.tsx`1枚の中でステップ管理する想定（テンプレート選択→アップロード→編集→書き出し）。URLを分けたければ`app/create/`のようにフォルダを切ればよい
+- `Wizard.tsx`が`step`を見て`steps/`配下の該当コンポーネントを出し分ける
+- PlacementStepでの配置は、テンプレートの範囲内に収まるよう制限する（Konvaの`dragBoundFunc`で拘束する想定、ADR-0003）

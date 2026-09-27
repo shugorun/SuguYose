@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type { Template } from "@/types";
 import { useEditorStore } from "@/store/useEditorStore";
@@ -23,7 +23,7 @@ const templates: PresetTemplate[] = [
 ];
 
 export default function TemplateStep() {
-  const { template, setTemplate } = useEditorStore()
+  const { template, setTemplate, goNext } = useEditorStore();
 
   return (
     <div>
@@ -43,6 +43,13 @@ export default function TemplateStep() {
           </div>
         );
       })}
+      <button
+        onClick={goNext}
+        disabled={template === null}
+        className="rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+      >
+        次へ
+      </button>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { useEditorStore } from '@/store/useEditorStore'
 
-export default function uploadStep() {
+export default function UploadStep() {
     const [error, setError] = useState<string | null>(null)
     const { uploadedImageUrl, setUploadedImageUrl, goNext } = useEditorStore()
 

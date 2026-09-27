@@ -1,7 +1,5 @@
-import { imageConfigDefault } from "next/dist/shared/lib/image-config"
-
 export type PixelData = {
-    data: Uint8ClampedArray
+    data: Uint8ClampedArray<ArrayBuffer>
     width: number
     height: number
 }
@@ -37,8 +35,8 @@ export function medianFilter(image: PixelData, radius: number = 1): PixelData {
             for (let dy = -radius; dy <= radius; dy++) {
                 for (let dx = -radius; dx <= radius; dx++) {
                     const nx = Math.min(width-1, Math.max(0, x + dx))
-                    const ny = Math.min(width-1, Math.max(0, y + dy))
-                    const i = (ny + width + nx) * 4
+                    const ny = Math.min(height-1, Math.max(0, y + dy))
+                    const i = (ny * width + nx) * 4
                     rValues.push(data[i])
                     gValues.push(data[i+1])
                     bValues.push(data[i+2])
@@ -68,7 +66,7 @@ export function adaptiveThreshold(image: PixelData, radius: number = 5, bias: nu
             for (let dy = -radius; dy <= radius; dy++) {
                 for (let dx = -radius; dx <= radius; dx++) {
                     const nx = Math.min(width - 1, Math.max(0, x + dx))
-                    const ny = Math.min(width - 1, Math.max(0, y + dy))
+                    const ny = Math.min(height - 1, Math.max(0, y + dy))
                     const i = (ny * width + nx) * 4
                     sum += (data[i] + data[i+1] + data[i+2]) / 3
                     count++

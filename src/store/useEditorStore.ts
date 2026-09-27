@@ -13,6 +13,9 @@ type EditorState = {
     uploadedImageUrl: string | null
     setUploadedImageUrl: (url: string) => void
 
+    processedImageUrl: string | null
+    setProcessedImageUrl: (url: string) => void
+
     goNext: () => void
     goBack: () => void
 }
@@ -24,6 +27,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
 
     uploadedImageUrl: 'null',
     setUploadedImageUrl: (url) => set({ uploadedImageUrl: url }),
+
+    processedImageUrl: 'null',
+    setProcessedImageUrl: (url) => set({ processedImageUrl: url }),
 
     goNext: () => {
         const index = STEPS.indexOf(get().step)

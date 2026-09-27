@@ -3,6 +3,7 @@
 import { useEditorStore } from "@/store/useEditorStore"
 import TemplateStep from "./steps/TemplateStep"
 import InstructionStep from '@/components/steps/InstructionStep'
+import UploadStep from "@/components/steps/UploadStep"
 
 
 export default function Wizard() {
@@ -14,6 +15,7 @@ export default function Wizard() {
       <div className="flex flex-1 items-center justify-center">
         {step === 'template' && <TemplateStep />}
         {step === 'instruction' && <InstructionStep />}
+        {step === 'upload' && <UploadStep />}
       </div>
       <button onClick={goBack} className="fixed bottom-4 left-4 rounded bg-gray-200 px-4 py-2">
         戻る

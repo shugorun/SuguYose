@@ -4,6 +4,7 @@ import { useEditorStore } from "@/store/useEditorStore"
 import TemplateStep from "./steps/TemplateStep"
 import InstructionStep from '@/components/steps/InstructionStep'
 import UploadStep from "@/components/steps/UploadStep"
+import ProcessingStep from "@/components/steps/ProcessingStep"
 
 
 export default function Wizard() {
@@ -16,6 +17,7 @@ export default function Wizard() {
         {step === 'template' && <TemplateStep />}
         {step === 'instruction' && <InstructionStep />}
         {step === 'upload' && <UploadStep />}
+        {step === 'processing' && <ProcessingStep />}
       </div>
       <button onClick={goBack} className="fixed bottom-4 left-4 rounded bg-gray-200 px-4 py-2">
         戻る

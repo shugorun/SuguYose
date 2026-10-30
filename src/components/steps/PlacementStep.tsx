@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
 import type Konva from 'konva'
 import { useEditorStore } from '@/store/useEditorStore'
+import { clampToRange } from '@/lib/geometry'
 
 const STAGE_SIZE = 400
 
@@ -35,7 +36,7 @@ export default function PlacementStep() {
     return (
         <Stage width={STAGE_SIZE} height={STAGE_SIZE} style={{ border: '1px solid #ccc '}}>
             <Layer>
-                <KonvaImage ref={shapeRef} image={image} x={x} y={y} scaleX={fitScale} scaleY={fitScale} draggable />
+                <KonvaImage ref={shapeRef} image={image} x={x} y={y} scaleX={fitScale} scaleY={fitScale} draggable dragBoundFunc={(pos) => ({x: clampToRange(pos.x, 0, STAGE_SIZE - image.width * fitScale), y: clampToRange(pos.y, 0, STAGE_SIZE - image.height * fitScale)})}/>
                 <Transformer ref={transformerRef} />
             </Layer>
         </Stage>

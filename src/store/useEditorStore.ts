@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Template} from '@/types'
+import { Template } from '@/types'
 
 export type Step = 'template' | 'instruction' | 'upload' | 'processing' | 'placement' | 'export'
 
@@ -13,6 +13,9 @@ type EditorState = {
     uploadedImageUrl: string | null
     setUploadedImageUrl: (url: string) => void
 
+    previousUploadedImageUrl: string | null
+    setPreviousUploadedImageUrl: (url: string) => void
+
     processedImageUrl: string | null
     setProcessedImageUrl: (url: string) => void
 
@@ -25,10 +28,13 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     template: null,
     setTemplate: (t) => set({ template: t }),
 
-    uploadedImageUrl: 'null',
+    uploadedImageUrl: null,
     setUploadedImageUrl: (url) => set({ uploadedImageUrl: url }),
 
-    processedImageUrl: 'null',
+    previousUploadedImageUrl: null,
+    setPreviousUploadedImageUrl: (url) => set({ previousUploadedImageUrl: url }),
+
+    processedImageUrl: null,
     setProcessedImageUrl: (url) => set({ processedImageUrl: url }),
 
     goNext: () => {

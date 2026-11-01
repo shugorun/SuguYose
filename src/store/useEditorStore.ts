@@ -13,6 +13,9 @@ type EditorState = {
     uploadedImageUrl: string | null
     setUploadedImageUrl: (url: string) => void
 
+    previousUploadedImageUrl: string | null
+    setPreviousUploadedImageUrl: (url: string) => void
+
     processedImageUrl: string | null
     setProcessedImageUrl: (url: string) => void
 
@@ -30,6 +33,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
 
     uploadedImageUrl: null,
     setUploadedImageUrl: (url) => set({ uploadedImageUrl: url }),
+
+    previousUploadedImageUrl: null,
+    setPreviousUploadedImageUrl: (url) => set({ previousUploadedImageUrl: url }),
 
     processedImageUrl: null,
     setProcessedImageUrl: (url) => set({ processedImageUrl: url }),

@@ -32,7 +32,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     setTemplate: (t) => set({ template: t }),
 
     uploadedImageUrl: null,
-    setUploadedImageUrl: (url) => set({ uploadedImageUrl: url }),
+    setUploadedImageUrl: (url) => set({ uploadedImageUrl: url, placedImage: null }),
 
     previousUploadedImageUrl: null,
     setPreviousUploadedImageUrl: (url) => set({ previousUploadedImageUrl: url }),

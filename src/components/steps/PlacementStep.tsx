@@ -64,8 +64,8 @@ export default function PlacementStep() {
           rotation={currentPlacedImage.rotation}
           draggable
           dragBoundFunc={(pos) => ({
-            x: clampToRange(pos.x, 0, STAGE_SIZE - image.width * fitScale),
-            y: clampToRange(pos.y, 0, STAGE_SIZE - image.height * fitScale),
+            x: clampToRange(pos.x, 0, STAGE_SIZE - image.width * currentPlacedImage.scaleX),
+            y: clampToRange(pos.y, 0, STAGE_SIZE - image.height * currentPlacedImage.scaleY),
           })}
           onDragEnd={(e) => {
             const dragPlacedStatus: PlacedImage = {...currentPlacedImage, x: e.target.x(), y: e.target.y()}

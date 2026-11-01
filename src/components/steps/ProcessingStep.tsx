@@ -1,13 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useEditorStore } from "@/store/useEditorStore"
 import { medianFilter, enhanceContrast, adaptiveThreshold } from '@/lib/imageProcessing'
 import type { PixelData } from "@/lib/imageProcessing"
 
 export default function ProcessingStep() {
-    const [isProcessing, setIsProcessing] = useState(true)
-    const {uploadedImageUrl, processedImageUrl, setProcessedImageUrl, goNext} = useEditorStore()
+    const {uploadedImageUrl, previousUploadedImageUrl, setPreviousUploadedImageUrl, processedImageUrl, setProcessedImageUrl, goNext} = useEditorStore()
 
     useEffect(() => {
         if (!uploadedImageUrl) return
@@ -33,13 +32,15 @@ export default function ProcessingStep() {
 
             ctx.putImageData(new ImageData(pixels.data, pixels.width, pixels.height), 0, 0)
             setProcessedImageUrl(canvas.toDataURL('image/png'))
-            setIsProcessing(false)
+            setPreviousUploadedImageUrl(uploadedImageUrl as string)
         }
+        if (uploadedImageUrl !== previousUploadedImageUrl) {
+            process()
+        }
+        
+    }, [uploadedImageUrl, setProcessedImageUrl, previousUploadedImageUrl, setPreviousUploadedImageUrl])
 
-        process()
-    }, [uploadedImageUrl, setProcessedImageUrl])
-
-    if (isProcessing) return <p>画像を処理しています．．．</p>
+    if (uploadedImageUrl !== previousUploadedImageUrl) return <p>画像を処理しています．．．</p>
 
     return (
         <div>
